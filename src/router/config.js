@@ -43,17 +43,17 @@ const options = {
           component: () => import('@/pages/demo')
         },
         {
-          path: 'parent1',
-          name: '父级路由1',
+          path: 'posts',
+          name: '文章',
           meta: {
-            icon: 'dashboard',
+            icon: 'form',
           },
-          component: BlankView,
+          component: PageView,
           children: [
             {
-              path: 'demo1',
-              name: '演示页面1',
-              component: () => import('@/pages/demo'),
+              path: 'list',
+              name: '所有文章',
+              component: () => import('@/pages/list'),
             }
           ]
         },
