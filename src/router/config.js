@@ -35,14 +35,6 @@ const options = {
           component: () => import('@/pages/dashboard')
         },
         {
-          path: 'demo',
-          name: '演示页',
-          meta: {
-            icon: 'file-ppt'
-          },
-          component: () => import('@/pages/demo')
-        },
-        {
           path: 'posts',
           name: '文章',
           meta: {
@@ -53,27 +45,60 @@ const options = {
             {
               path: 'list',
               name: '所有文章',
-              component: () => import('@/pages/list'),
+              component: () => import('@/pages/posts/list'),
             },
             {
               path: 'write',
               name: '写文章',
-              component: () => import('@/pages/write'),
+              component: () => import('@/pages/posts/write'),
+            },
+            {
+              path: 'categories',
+              name: '分类目录',
+              component: () => import('@/pages/categories'),
+            },
+            {
+              path: 'tags',
+              name: '标签',
+              component: () => import('@/pages/tags'),
             }
           ]
         },
         {
-          path: 'parent2',
-          name: '父级路由2',
+          path: 'comments',
+          name: '评论',
           meta: {
-            icon: 'form'
+            icon: 'message'
+          },
+          component: () => import('@/pages/comments')
+        },
+        {
+          path: 'user',
+          name: '用户',
+          meta: {
+            icon: 'user',
           },
           component: PageView,
           children: [
             {
-              path: 'demo2',
-              name: '演示页面2',
-              component: () => import('@/pages/demo'),
+              path: 'profile',
+              name: '个人资料',
+              component: () => import('@/pages/profile'),
+            }
+          ]
+        },
+        {
+          path: 'system',
+          name: '系统',
+          meta: {
+            icon: 'setting',
+          },
+          component: PageView,
+          children: [
+            {
+              path: 'options',
+              name: '博客设置',
+              component: () => import('@/pages/system/options'),
             }
           ]
         },
@@ -101,6 +126,14 @@ const options = {
               component: () => import('@/pages/exception/500')
             }
           ]
+        },
+        {
+          path: 'demo',
+          name: '演示页',
+          meta: {
+            icon: 'file-ppt'
+          },
+          component: () => import('@/pages/demo')
         },
         {
           name: '验权页面',
