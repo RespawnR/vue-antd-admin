@@ -54,6 +54,11 @@ const options = {
               path: 'list',
               name: '所有文章',
               component: () => import('@/pages/list'),
+            },
+            {
+              path: 'write',
+              name: '写文章',
+              component: () => import('@/pages/write'),
             }
           ]
         },
