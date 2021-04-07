@@ -27,6 +27,14 @@ const options = {
       redirect: '/login',
       children: [
         {
+          path: 'dashboard',
+          name: '仪表盘',
+          meta: {
+            icon: 'dashboard'
+          },
+          component: () => import('@/pages/dashboard')
+        },
+        {
           path: 'demo',
           name: '演示页',
           meta: {

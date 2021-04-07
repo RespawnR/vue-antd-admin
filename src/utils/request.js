@@ -157,12 +157,12 @@ function parseUrlParams(url) {
 }
 
 export {
-  METHOD,
-  AUTH_TYPE,
-  request,
-  setAuthorization,
-  removeAuthorization,
-  checkAuthorization,
-  loadInterceptors,
+  METHOD,               //http method 常量
+  AUTH_TYPE,            //凭证认证类型 常量
+  request,              //http请求函数
+  setAuthorization,     //设置身份凭证函数
+  removeAuthorization,  //移除身份凭证函数
+  checkAuthorization,   //检查身份凭证是否过期函数
+  loadInterceptors,     
   parseUrlParams
 }

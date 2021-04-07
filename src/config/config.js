@@ -3,10 +3,15 @@ module.exports = {
   theme: {
     color: '#13c2c2',
     mode: 'dark',
+    success: '#52c41a',
+    warning: '#faad14',
+    error: '#f5222f'
   },
   multiPage: true,
   animate: {
-    name: 'lightSpeed',
-    direction: 'left'
+    disabled: true,
+    name: 'fade',
+    direction: 'default'
   }
 }
+      
