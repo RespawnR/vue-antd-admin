@@ -89,6 +89,12 @@ export default {
         this.setUser(user)
         this.setPermissions(permissions)
         this.setRoles(roles)
+
+        console.log("Login.vue --- roles")
+        console.log(roles)
+        console.log("Login.vue --- permissions")
+        console.log(permissions)
+
         setAuthorization({token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt)})
         // 获取路由配置
         getRoutesConfig().then(result => {
