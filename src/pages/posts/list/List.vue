@@ -9,7 +9,7 @@
               :labelCol="{span: 5}"
               :wrapperCol="{span: 15, offset: 1}"
             >
-              <a-input />
+              <a-input v-model="queryParam.keywords" placeholder=""/>
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="24" >
@@ -18,7 +18,8 @@
               :labelCol="{span: 5}"
               :wrapperCol="{span: 15, offset: 1}"
             >
-              <a-select placeholder="请选择文章状态">
+              <a-select placeholder="请选择文章状态" v-model="queryParam.status" defaultValue="0">
+                <a-select-option value="0">全部</a-select-option>
                 <a-select-option value="1">已发布</a-select-option>
                 <a-select-option value="2">草稿</a-select-option>
                 <a-select-option value="3">回收站</a-select-option>
@@ -32,7 +33,8 @@
               :labelCol="{span: 5}"
               :wrapperCol="{span: 15, offset: 1}"
             >
-              <a-select placeholder="请选择分类">
+              <a-select placeholder="请选择分类" v-model="queryParam.category" defaultValue="0">
+                <a-select-option value="0">全部</a-select-option>
                 <a-select-option value="1">默认分类</a-select-option>
               </a-select>
             </a-form-item>
@@ -40,9 +42,9 @@
         </a-row>
           
         </div>
-        <span style="float: right; margin-top: 3px;">
+        <span style="float: right; margin-top: 3px; margin-right: 60px">
           <a-button type="primary">查询</a-button>
-          <a-button style="margin-left: 8px">重置</a-button>
+          <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
         </span>
       </a-form>
 
@@ -61,6 +63,34 @@
       >
         <div slot="description" slot-scope="{text}">
           {{text}}
+        </div>
+        <!-- 分类 -->
+        <div slot="categories" slot-scope="{text}">
+          <a-tag
+            v-for="category in text"
+            :key="category"
+            color="blue"
+          >
+            {{ category }}
+          </a-tag>
+        </div>
+        <!-- 标签 -->
+        <div slot="tags" slot-scope="{text}">
+          <a-tag
+            v-for="tag in text"
+            :key="tag"
+            color="green"
+          >
+            {{ tag }}
+          </a-tag>
+        </div>
+        <!-- 评论数 -->
+        <div slot="commentCount" slot-scope="{text}">
+          <a-badge :count=text :overflow-count="999" :number-style="{ backgroundColor: '#ffa39e' }" />
+        </div>
+        <!-- 访问数 -->
+        <div slot="visitCount" slot-scope="{text}">
+          <a-badge :count=text :overflow-count="999" :number-style="{ backgroundColor: '#36cfc9' }" />
         </div>
         <div slot="action" slot-scope="{record}">
           <a style="margin-right: 8px">
@@ -92,39 +122,50 @@ import StandardTable from '@/components/table/StandardTable'
 const columns = [
   {
     title: '标题',
-    dataIndex: 'title'
+    dataIndex: 'title',
+    width: 100,
   },
   {
     title: '状态',
-    dataIndex: 'status'
+    dataIndex: 'status',
+    width: 100,
   },
   {
     title: '分类',
-    dataIndex: 'category'
+    dataIndex: 'categories',
+    scopedSlots: { customRender: 'categories' },
+    width: 100,
   },
   {
     title: '标签',
     dataIndex: 'tags',
-    needTotal: true
+    scopedSlots: { customRender: 'tags' },
+    width: 200,
   },
   {
     title: '评论',
     dataIndex: 'commentCount',
-    sorter: true
+    scopedSlots: { customRender: 'commentCount' },
+    sorter: true,
+    width: 100,
   },
   {
     title: '访问',
     dataIndex: 'visitCount',
-    sorter: true
+    scopedSlots: { customRender: 'visitCount' },
+    sorter: true,
+    width: 100,
   },
   {
     title: '发布时间',
     dataIndex: 'updatedAt',
-    sorter: true
+    sorter: true,
+    width: 100,
   },
   {
     title: '操作',
-    scopedSlots: { customRender: 'action' }
+    scopedSlots: { customRender: 'action' },
+    width: 200,
   }
 ]
 const dataSource = []
@@ -133,8 +174,8 @@ for (let i = 0; i < 20; i++) {
     key: i,
     title: '标题-' + i,
     status: '已发布',
-    category: '默认分类',
-    tags: Math.floor(Math.random() * 10) % 4,
+    categories: ['默认分类'],
+    tags: ['javascript', 'ES5', 'ES2015', 'SSM', 'java'],
     commentCount: Math.floor(Math.random() * 1000),
     visitCount: Math.floor(Math.random() * 1000),
     updatedAt: '2018-07-06',
@@ -145,8 +186,9 @@ export default {
   components: {StandardTable},
   data () {
     return {
-      advanced: true,
       columns: columns,
+      // 查询参数
+      queryParam: {},
       dataSource: dataSource,
       selectedRows: []
     }
