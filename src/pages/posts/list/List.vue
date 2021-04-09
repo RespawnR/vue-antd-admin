@@ -1,52 +1,52 @@
 <template>
-  <a-card>
-      <a-form layout="horizontal">
-        <div class="fold">
-          <a-row >
-          <a-col :md="8" :sm="24" >
-            <a-form-item
-              label="关键词"
-              :labelCol="{span: 5}"
-              :wrapperCol="{span: 15, offset: 1}"
-            >
-              <a-input v-model="queryParam.keywords" placeholder=""/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="8" :sm="24" >
-            <a-form-item
-              label="文章状态"
-              :labelCol="{span: 5}"
-              :wrapperCol="{span: 15, offset: 1}"
-            >
-              <a-select placeholder="请选择文章状态" v-model="queryParam.status" defaultValue="0">
-                <a-select-option value="0">全部</a-select-option>
-                <a-select-option value="1">已发布</a-select-option>
-                <a-select-option value="2">草稿</a-select-option>
-                <a-select-option value="3">回收站</a-select-option>
-                <a-select-option value="4">私密</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :md="8" :sm="24" >
-            <a-form-item
-              label="分类目录"
-              :labelCol="{span: 5}"
-              :wrapperCol="{span: 15, offset: 1}"
-            >
-              <a-select placeholder="请选择分类" v-model="queryParam.category" defaultValue="0">
-                <a-select-option value="0">全部</a-select-option>
-                <a-select-option value="1">默认分类</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-        </a-row>
-          
-        </div>
-        <span style="float: right; margin-top: 3px; margin-right: 60px">
-          <a-button type="primary">查询</a-button>
-          <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
-        </span>
-      </a-form>
+  <a-card class="new-page">
+    <a-form layout="horizontal">
+      <div class="fold">
+        <a-row >
+        <a-col :md="8" :sm="24" >
+          <a-form-item
+            label="关键词"
+            :labelCol="{span: 5}"
+            :wrapperCol="{span: 15, offset: 1}"
+          >
+            <a-input v-model="queryParam.keywords" placeholder=""/>
+          </a-form-item>
+        </a-col>
+        <a-col :md="8" :sm="24" >
+          <a-form-item
+            label="文章状态"
+            :labelCol="{span: 5}"
+            :wrapperCol="{span: 15, offset: 1}"
+          >
+            <a-select placeholder="请选择文章状态" v-model="queryParam.status" defaultValue="0">
+              <a-select-option value="0">全部</a-select-option>
+              <a-select-option value="1">已发布</a-select-option>
+              <a-select-option value="2">草稿</a-select-option>
+              <a-select-option value="3">回收站</a-select-option>
+              <a-select-option value="4">私密</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+        <a-col :md="8" :sm="24" >
+          <a-form-item
+            label="分类目录"
+            :labelCol="{span: 5}"
+            :wrapperCol="{span: 15, offset: 1}"
+          >
+            <a-select placeholder="请选择分类" v-model="queryParam.category" defaultValue="0">
+              <a-select-option value="0">全部</a-select-option>
+              <a-select-option value="1">默认分类</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+      </a-row>
+        
+      </div>
+      <span style="float: right; margin-top: 3px; margin-right: 60px">
+        <a-button type="primary">查询</a-button>
+        <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
+      </span>
+    </a-form>
 
     <div>
       <a-space class="operator">
@@ -229,8 +229,8 @@ export default {
         key: this.dataSource.length,
         title: '标题-' + this.dataSource.length,
         status: '已发布',
-        category: '默认分类',
-        tags: Math.floor(Math.random() * 10) % 4,
+        categories: ['默认分类'],
+        tags: ['javascript', 'ES5', 'ES2015', 'SSM', 'java'],
         commentCount: Math.floor(Math.random() * 1000),
         visitCount: Math.floor(Math.random() * 1000),
         updatedAt: '2018-07-06',
@@ -246,6 +246,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import "index.less";
   .search{
     margin-bottom: 54px;
   }

@@ -5,14 +5,18 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { mapState } from 'vuex'
 
+import FooterToolBar from '@/components/tool/FooterToolBar'
+
 // use
 Vue.use(mavonEditor)
 
 export default {
     name: 'write',
+    components: {FooterToolBar},
     data() {
         return {
-            context: '',
+            title: '',      //文章标题
+            context: '',    //文章内容
             desc: ''
         }
     },
