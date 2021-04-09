@@ -64,6 +64,11 @@
         <div slot="description" slot-scope="{text}">
           {{text}}
         </div>
+        <!-- 状态 -->
+        <div slot="status" slot-scope="{text}" >
+          <a-badge dot color="green"></a-badge>
+          {{ text }}
+        </div>
         <!-- 分类 -->
         <div slot="categories" slot-scope="{text}">
           <a-tag
@@ -86,11 +91,11 @@
         </div>
         <!-- 评论数 -->
         <div slot="commentCount" slot-scope="{text}">
-          <a-badge :count=text :overflow-count="999" :number-style="{ backgroundColor: '#ffa39e' }" />
+          <a-badge :count=text :overflow-count="999" :showZero="true" :number-style="{ backgroundColor: '#ffa39e' }" />
         </div>
         <!-- 访问数 -->
         <div slot="visitCount" slot-scope="{text}">
-          <a-badge :count=text :overflow-count="999" :number-style="{ backgroundColor: '#36cfc9' }" />
+          <a-badge :count=text :overflow-count="999" :showZero="true" :number-style="{ backgroundColor: '#36cfc9' }" />
         </div>
         <div slot="action" slot-scope="{record}">
           <a style="margin-right: 8px">
@@ -109,6 +114,7 @@
             <a-icon type="setting" />设置
           </a>
         </div>
+
         <template slot="statusTitle">
           <a-icon @click.native="onStatusTitleClick" type="info-circle" />
         </template>
@@ -123,56 +129,57 @@ const columns = [
   {
     title: '标题',
     dataIndex: 'title',
-    width: 100,
+    width: 150,
   },
   {
     title: '状态',
     dataIndex: 'status',
+    scopedSlots: { customRender: 'status' },
     width: 100,
   },
   {
     title: '分类',
     dataIndex: 'categories',
     scopedSlots: { customRender: 'categories' },
-    width: 100,
+    width: 150,
   },
   {
     title: '标签',
     dataIndex: 'tags',
     scopedSlots: { customRender: 'tags' },
-    width: 200,
+    width: 180,
   },
   {
     title: '评论',
     dataIndex: 'commentCount',
     scopedSlots: { customRender: 'commentCount' },
-    sorter: true,
-    width: 100,
+    sorter: (a, b) => a.commentCount - b.commentCount,
+    width: 80,
   },
   {
     title: '访问',
     dataIndex: 'visitCount',
     scopedSlots: { customRender: 'visitCount' },
-    sorter: true,
-    width: 100,
+    sorter: (a, b) => a.visitCount - b.visitCount,
+    width: 80,
   },
   {
     title: '发布时间',
     dataIndex: 'updatedAt',
-    sorter: true,
+    sorter: (a, b) => a.updatedAt - b.updatedAt,
     width: 100,
   },
   {
     title: '操作',
     scopedSlots: { customRender: 'action' },
-    width: 200,
+    width: 180,
   }
 ]
 const dataSource = []
 for (let i = 0; i < 20; i++) {
   dataSource.push({
     key: i,
-    title: '标题-' + i,
+    title: '博文文章标题-' + (i + 1),
     status: '已发布',
     categories: ['默认分类'],
     tags: ['javascript', 'ES5', 'ES2015', 'SSM', 'java'],

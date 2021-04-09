@@ -50,7 +50,7 @@ const options = {
             {
               path: 'write',
               name: '写文章',
-              component: () => import('@/pages/posts/write'),
+              component: () => import('@/pages/posts/write/Write'),
             },
             {
               path: 'categories',
