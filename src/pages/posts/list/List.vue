@@ -110,7 +110,7 @@
               <a-icon type="delete" />回收站
             </a>
           </a-popconfirm>
-          <a>
+          <a @click="showDrawer()">
             <a-icon type="setting" />设置
           </a>
         </div>
@@ -119,6 +119,58 @@
           <a-icon @click.native="onStatusTitleClick" type="info-circle" />
         </template>
       </standard-table>
+
+      <a-drawer
+        title="文章设置"
+        :width="480"
+        :visible="visible"
+        :body-style="{ paddingBottom: '80px' }"
+        @close="onClose"
+      >
+        <a-form :form="form" layout="vertical" hide-required-mark>
+          <h3>基本设置</h3>
+          <a-space direction="vertical" style="width:100%">
+            <a-row>
+              <a-col :span="24">
+                <a-form-item label="文章别名：">
+                  <a-input placeholder="" />
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-space>
+          <a-divider style="background: #E8E8E8; height: 2px" />
+          <h3>分类目录</h3>
+          <a-divider style="background: #E8E8E8;" />
+          <h3>标签</h3>
+          <a-divider style="background: #E8E8E8;" />
+          <h3>摘要</h3>
+          
+        </a-form>
+        <div
+          :style="{
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            width: '100%',
+            borderTop: '1px solid #e9e9e9',
+            padding: '10px 16px',
+            background: '#fff',
+            textAlign: 'right',
+            zIndex: 1,
+          }"
+        >
+          <a-button :style="{ marginRight: '8px' }" @click="onClose">
+            取消
+          </a-button>
+          <a-button :style="{ marginRight: '8px' }" type="danger">
+            保存草稿
+          </a-button>
+          <a-button type="primary" @click="onClose">
+            确认发布
+          </a-button>
+        </div>
+      </a-drawer>
+
     </div>
   </a-card>
 </template>
@@ -197,10 +249,18 @@ export default {
       // 查询参数
       queryParam: {},
       dataSource: dataSource,
-      selectedRows: []
+      selectedRows: [],
+      form: this.$form.createForm(this),
+      visible: false,
     }
   },
   methods: {
+    showDrawer() {
+      this.visible = true;
+    },
+    onClose() {
+        this.visible = false;
+    },
     deleteRecord(key) {
       this.dataSource = this.dataSource.filter(item => item.key !== key)
       this.selectedRows = this.selectedRows.filter(item => item.key !== key)

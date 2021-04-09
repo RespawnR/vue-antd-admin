@@ -1,5 +1,6 @@
 <template>
   <div class="footer">
+    <!-- 关闭页脚其他链接显示 -->
     <!-- <div class="links">
       <a target="_blank" :key="index" :href="item.link ? item.link : 'javascript: void(0)'" v-for="(item, index) in linkList">
         <a-icon v-if="item.icon" :type="item.icon"/>{{item.name}}

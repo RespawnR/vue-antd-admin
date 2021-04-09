@@ -7,6 +7,7 @@ module.exports = {
     warning: '#faad14',
     error: '#f5222f'
   },
+  fixedHeader: true,
   multiPage: true,
   animate: {
     disabled: true,
