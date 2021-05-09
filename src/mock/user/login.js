@@ -9,15 +9,15 @@ const user = Mock.mock({
 })
 Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/login`, 'post', ({body}) => {
   let result = {data: {}}
-  const {name, password} = JSON.parse(body)
+  const {email, pwd} = JSON.parse(body)
 
   let success = false
 
-  if (name === 'admin' && password === '123') {
+  if (email === 'admin' && pwd === '123') {
     success = true
     result.data.permissions = [{id: 'queryForm', operation: ['add', 'delete', 'edit']}]
     result.data.roles = [{id: 'admin', operation: ['add', 'edit', 'delete', 'close']}]
-  } else if (name === 'test' || password === '888888') {
+  } else if (email === 'test' || pwd === '888888') {
     success = true
     result.data.permissions = [{id: 'queryForm', operation: ['add', 'edit']}]
     result.data.roles = [{id: 'test', operation: ['add', 'edit', 'delete']}]
