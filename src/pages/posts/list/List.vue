@@ -54,6 +54,7 @@
       </a-space>
 
       <standard-table
+        rowKey="id"
         :columns="columns"
         :dataSource="dataSource"
         :selectedRows.sync="selectedRows"
@@ -61,9 +62,6 @@
         @change="onChange"
         @selectedRowChange="onSelectChange"
       >
-        <div slot="description" slot-scope="{text}">
-          {{text}}
-        </div>
         <!-- 状态 -->
         <div slot="status" slot-scope="{text}" >
           <a-badge dot color="green"></a-badge>
@@ -73,30 +71,36 @@
         <div slot="categories" slot-scope="{text}">
           <a-tag
             v-for="category in text"
-            :key="category"
+            :key="category.id"
             color="blue"
           >
-            {{ category }}
+            {{ category.name }}
           </a-tag>
         </div>
         <!-- 标签 -->
         <div slot="tags" slot-scope="{text}">
           <a-tag
             v-for="tag in text"
-            :key="tag"
+            :key="tag.id"
             color="green"
           >
-            {{ tag }}
+            {{ tag.name }}
           </a-tag>
         </div>
         <!-- 评论数 -->
-        <div slot="commentCount" slot-scope="{text}">
+        <div slot="commentedCount" slot-scope="{text}">
           <a-badge :count=text :overflow-count="999" :showZero="true" :number-style="{ backgroundColor: '#ffa39e' }" />
         </div>
         <!-- 访问数 -->
-        <div slot="visitCount" slot-scope="{text}">
+        <div slot="visitedCount" slot-scope="{text}">
           <a-badge :count=text :overflow-count="999" :showZero="true" :number-style="{ backgroundColor: '#36cfc9' }" />
         </div>
+
+        <!-- 编辑时间 -->
+        <div slot="updatedAt" slot-scope="{text}">
+          {{ formatTime(text) }}
+        </div>
+
         <div slot="action" slot-scope="{record}">
           <a style="margin-right: 8px">
             <a-icon type="edit"/>编辑
@@ -104,7 +108,7 @@
           <a-popconfirm
             v-if="dataSource.length"
             :title="`你确定要将【` + record.title + `】文章移到回收站？`"
-            @confirm="() => deleteRecord(record.key)"
+            @confirm="() => deleteRecord(record.id)"
           >
             <a style="margin-right: 8px" href="javascript:;">
               <a-icon type="delete" />回收站
@@ -114,10 +118,6 @@
             <a-icon type="setting" />设置
           </a>
         </div>
-
-        <template slot="statusTitle">
-          <a-icon @click.native="onStatusTitleClick" type="info-circle" />
-        </template>
       </standard-table>
 
       <a-drawer
@@ -175,151 +175,5 @@
   </a-card>
 </template>
 
-<script>
-import StandardTable from '@/components/table/StandardTable'
-const columns = [
-  {
-    title: '标题',
-    dataIndex: 'title',
-    width: 150,
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    scopedSlots: { customRender: 'status' },
-    width: 100,
-  },
-  {
-    title: '分类',
-    dataIndex: 'categories',
-    scopedSlots: { customRender: 'categories' },
-    width: 150,
-  },
-  {
-    title: '标签',
-    dataIndex: 'tags',
-    scopedSlots: { customRender: 'tags' },
-    width: 180,
-  },
-  {
-    title: '评论',
-    dataIndex: 'commentCount',
-    scopedSlots: { customRender: 'commentCount' },
-    sorter: (a, b) => a.commentCount - b.commentCount,
-    width: 80,
-  },
-  {
-    title: '访问',
-    dataIndex: 'visitCount',
-    scopedSlots: { customRender: 'visitCount' },
-    sorter: (a, b) => a.visitCount - b.visitCount,
-    width: 80,
-  },
-  {
-    title: '发布时间',
-    dataIndex: 'updatedAt',
-    sorter: (a, b) => a.updatedAt - b.updatedAt,
-    width: 100,
-  },
-  {
-    title: '操作',
-    scopedSlots: { customRender: 'action' },
-    width: 180,
-  }
-]
-const dataSource = []
-for (let i = 0; i < 20; i++) {
-  dataSource.push({
-    key: i,
-    title: '博文文章标题-' + (i + 1),
-    status: '已发布',
-    categories: ['默认分类'],
-    tags: ['javascript', 'ES5', 'ES2015', 'SSM', 'java'],
-    commentCount: Math.floor(Math.random() * 1000),
-    visitCount: Math.floor(Math.random() * 1000),
-    updatedAt: '2018-07-06',
-  })
-}
-export default {
-  name: 'QueryList',
-  components: {StandardTable},
-  data () {
-    return {
-      columns: columns,
-      // 查询参数
-      queryParam: {},
-      dataSource: dataSource,
-      selectedRows: [],
-      form: this.$form.createForm(this),
-      visible: false,
-    }
-  },
-  methods: {
-    showDrawer() {
-      this.visible = true;
-    },
-    onClose() {
-        this.visible = false;
-    },
-    deleteRecord(key) {
-      this.dataSource = this.dataSource.filter(item => item.key !== key)
-      this.selectedRows = this.selectedRows.filter(item => item.key !== key)
-    },
-    toggleAdvanced () {
-      this.advanced = !this.advanced
-    },
-    remove () {
-      this.dataSource = this.dataSource.filter(item => this.selectedRows.findIndex(row => row.key === item.key) === -1)
-      this.selectedRows = []
-    },
-    onClear() {
-      this.$message.info('您清空了勾选的所有行')
-    },
-    onStatusTitleClick() {
-      this.$message.info('你点击了状态栏表头')
-    },
-    onChange() {
-      this.$message.info('表格状态改变了')
-    },
-    onSelectChange() {
-      this.$message.info('选中行改变了')
-    },
-    addNew () {
-      this.dataSource.unshift({
-        key: this.dataSource.length,
-        title: '标题-' + this.dataSource.length,
-        status: '已发布',
-        categories: ['默认分类'],
-        tags: ['javascript', 'ES5', 'ES2015', 'SSM', 'java'],
-        commentCount: Math.floor(Math.random() * 1000),
-        visitCount: Math.floor(Math.random() * 1000),
-        updatedAt: '2018-07-06',
-      })
-    },
-    handleMenuClick (e) {
-      if (e.key === 'delete') {
-        this.remove()
-      }
-    }
-  }
-}
-</script>
-
-<style lang="less" scoped>
-  @import "index.less";
-  .search{
-    margin-bottom: 54px;
-  }
-  .fold{
-    width: calc(100% - 216px);
-    display: inline-block
-  }
-  .operator{
-    margin-bottom: 18px;
-  }
-  @media screen and (max-width: 900px) {
-    .fold {
-      width: 100%;
-    }
-  }
-</style>
+<script src="./index.js" ></script>
+<style lang="less" scoped src="./index.less"></style>

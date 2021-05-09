@@ -1,6 +1,25 @@
-.new-page{
-  height: 100%;
+.new-page {
+  height          : 100%;
   background-color: @base-bg-color;
-  border-radius: 4px;
-  margin-top: -10px;
+  border-radius   : 4px;
+  margin-top      : -10px;
+}
+
+.search {
+  margin-bottom: 54px;
+}
+
+.fold {
+  width  : calc(100% - 216px);
+  display: inline-block
+}
+
+.operator {
+  margin-bottom: 18px;
+}
+
+@media screen and (max-width: 900px) {
+  .fold {
+    width: 100%;
+  }
 }

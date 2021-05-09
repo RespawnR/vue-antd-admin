@@ -8,7 +8,7 @@ const options = {
     {
       path: '/login',
       name: '登录页',
-      component: () => import('@/pages/login')
+      component: () => import('@/pages/login/Login')
     },
     {
       path: '*',
@@ -45,7 +45,7 @@ const options = {
             {
               path: 'list',
               name: '所有文章',
-              component: () => import('@/pages/posts/list'),
+              component: () => import('@/pages/posts/list/List'),
             },
             {
               path: 'write',
@@ -137,14 +137,14 @@ const options = {
           },
           component: () => import('@/pages/demo')
         },
-        {
-          name: '验权页面',
-          path: 'auth/demo',
-          meta: {
-            icon: 'file-ppt',
-            component: () => import('@/pages/demo')
-          }
-        }
+        // {
+        //   name: '验权页面',
+        //   path: 'auth/demo',
+        //   meta: {
+        //     icon: 'file-ppt',
+        //     component: () => import('@/pages/demo')
+        //   }
+        // }
       ]
     }
   ]
