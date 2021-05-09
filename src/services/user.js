@@ -1,4 +1,4 @@
-import {LOGIN, ROUTES} from '@/services/api'
+import {LOGIN} from '@/services/api'
 import {request, METHOD, removeAuthorization} from '@/utils/request'
 
 /**
@@ -14,10 +14,6 @@ export async function login(name, password) {
   })
 }
 
-export async function getRoutesConfig() {
-  return request(ROUTES, METHOD.GET)
-}
-
 /**
  * 退出登录
  */
@@ -29,6 +25,5 @@ export function logout() {
 }
 export default {
   login,
-  logout,
-  getRoutesConfig
+  logout
 }

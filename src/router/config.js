@@ -142,10 +142,6 @@ const options = {
           path: 'auth/demo',
           meta: {
             icon: 'file-ppt',
-            authority: {
-              permission: 'form',
-              role: 'manager'
-            },
             component: () => import('@/pages/demo')
           }
         }

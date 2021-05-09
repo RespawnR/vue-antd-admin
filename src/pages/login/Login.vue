@@ -48,7 +48,7 @@
 
 <script>
 import CommonLayout from '@/layouts/CommonLayout'
-import {login, getRoutesConfig} from '@/services/user'
+import {login} from '@/services/user'
 import {setAuthorization} from '@/utils/request'
 import {loadRoutes} from '@/utils/routerUtil'
 import {mapMutations} from 'vuex'
@@ -69,7 +69,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('account', ['setUser', 'setPermissions', 'setRoles']),
+    ...mapMutations('account', ['setUser']),
     onSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err) => {
@@ -84,27 +84,16 @@ export default {
     afterLogin(res) {
       this.logging = false
       const loginRes = res.data
-      if (loginRes.code >= 0) {
-        const {user, permissions, roles} = loginRes.data
+      if (loginRes.code == "0") {
+        const user = loginRes.data
         this.setUser(user)
-        this.setPermissions(permissions)
-        this.setRoles(roles)
-
-        console.log("Login.vue --- roles")
-        console.log(roles)
-        console.log("Login.vue --- permissions")
-        console.log(permissions)
-
-        setAuthorization({token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt)})
-        // 获取路由配置
-        getRoutesConfig().then(result => {
-          const routesConfig = result.data.data
-          loadRoutes(routesConfig)
-          this.$router.push('/dashboard')
-          this.$message.success(loginRes.message, 3)
-        })
+        setAuthorization({token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt)})//后面这用毫秒数也能new出来？？
+        // 获取默认路由配置
+        loadRoutes()
+        this.$router.push('/dashboard')
+        this.$message.success(loginRes.msg, 3)
       } else {
-        this.error = loginRes.message
+        this.error = loginRes.msg
       }
     },
     onClose() {

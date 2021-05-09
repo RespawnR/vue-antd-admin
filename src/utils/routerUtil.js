@@ -1,8 +1,5 @@
-import routerMap from '@/router/async/router.map'
 import {mergeI18nFromRoutes} from '@/utils/i18n'
-import Router from 'vue-router'
 import deepMerge from 'deepmerge'
-import basicOptions from '@/router/async/config.async'
 
 //应用配置
 let appOptions = {
@@ -93,18 +90,6 @@ function loadRoutes(routesConfig) {
   } else {
     routesConfig = store.getters['account/routesConfig']
   }
-  // 如果开启了异步路由，则加载异步路由配置
-  const asyncRoutes = store.state.setting.asyncRoutes
-  if (asyncRoutes) {
-    if (routesConfig && routesConfig.length > 0) {
-      const routes = parseRoutes(routesConfig, routerMap)
-      const finalRoutes = mergeRoutes(basicOptions.routes, routes)
-      formatRoutes(finalRoutes)
-      router.options = {...router.options, routes: finalRoutes}
-      router.matcher = new Router({...router.options, routes:[]}).matcher
-      router.addRoutes(finalRoutes)
-    }
-  }
   // 提取路由国际化数据
   mergeI18nFromRoutes(i18n, router.options.routes)
   // 初始化Admin后台菜单数据
@@ -113,19 +98,6 @@ function loadRoutes(routesConfig) {
   if (menuRoutes) {
     store.commit('setting/setMenuData', menuRoutes)
   }
-}
-
-/**
- * 合并路由
- * @param target {Route[]}
- * @param source {Route[]}
- * @returns {Route[]}
- */
-function mergeRoutes(target, source) {
-  const routesMap = {}
-  target.forEach(item => routesMap[item.path] = item)
-  source.forEach(item => routesMap[item.path] = item)
-  return Object.values(routesMap)
 }
 
 /**
