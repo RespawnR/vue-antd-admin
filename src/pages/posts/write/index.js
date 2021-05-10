@@ -6,16 +6,13 @@ import 'mavon-editor/dist/css/index.css'
 import moment from 'moment'
 
 import { mapState } from 'vuex'
-
 import FooterToolBar from '@/components/tool/FooterToolBar'
 
 // use
 Vue.use(mavonEditor)
 
-
 const plainOptions = ['Apple', 'Pear', 'Orange'];
 const defaultCheckedList = ['Apple', 'Orange'];
-
 
 export default {
     name: 'write',
@@ -26,7 +23,7 @@ export default {
             title: '',      //文章标题
             context: '',    //文章内容
             form: this.$form.createForm(this),
-            visible: false,
+            visible: false,             //是否显示发布按钮的详细设置
             curTime: moment(),          //当前时间
             updatedAt: null,            //修改时间
             checkedList: defaultCheckedList,

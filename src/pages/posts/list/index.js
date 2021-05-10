@@ -55,7 +55,7 @@ const columns = [
 ]
 
 export default {
-  name: 'QueryList',
+  name: 'PostList',
   components: {StandardTable},
   data () {
     return {
@@ -102,7 +102,7 @@ export default {
       this.$message.info('选中行改变了')
     },
     addNew () {
-      console.log(this.dataSource)
+      this.$router.push('/posts/write')
     }
   }
 }
