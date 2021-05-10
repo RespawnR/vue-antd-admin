@@ -8,7 +8,6 @@ module.exports = {
     error: '#f5222f'
   },
   fixedHeader: true,
-  multiPage: true,
   animate: {
     disabled: true,
     name: 'fade',

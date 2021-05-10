@@ -40,7 +40,7 @@ module.exports = {
     proxy: {
       '/refresh_api/admin': { // 请求前添加的路径，会代替target网址请求
         // target: 'http://192.168.0.119:8080/',
-        target: 'http://localhost:8090/', // 代理服务器地址
+        target: 'http://localhost:8092/', // 代理服务器地址
         changeOrigin: true, // 是否跨域
         ws: true,
         pathRewrite: { // 路径重写

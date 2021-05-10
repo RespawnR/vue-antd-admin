@@ -55,12 +55,12 @@ const options = {
             {
               path: 'categories',
               name: '分类目录',
-              component: () => import('@/pages/categories'),
+              component: () => import('@/pages/categories/Categories'),
             },
             {
               path: 'tags',
               name: '标签',
-              component: () => import('@/pages/tags'),
+              component: () => import('@/pages/tags/Tags'),
             }
           ]
         },
